@@ -4,7 +4,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { atLeastTwoVowels } from '../../../shared/validators/atLeastTwoVowels.validator';
 import { credsEvaluation } from '../../../shared/validators/credsEvaluation.validator';
 import { AuthService } from '../../../shared/services/auth.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'bld-login',
   standalone: true,
-  imports: [PasswordModule, CommonModule, ReactiveFormsModule, FormsModule, FloatLabelModule, ButtonModule, InputTextModule],
+  imports: [PasswordModule, CommonModule, ReactiveFormsModule, FloatLabelModule, ButtonModule, InputTextModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -33,7 +33,6 @@ export class LoginComponent {
   );
 
   onSubmit(){
-    console.log('submit', this.form.valid);
     if(this.form.valid){
       const { username, password } = this.form.value;
       this.#authService.login(username!, +password!);
