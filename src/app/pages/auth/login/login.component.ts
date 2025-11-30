@@ -8,12 +8,12 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angu
 import { atLeastTwoVowels } from '../../../shared/validators/atLeastTwoVowels.validator';
 import { credsEvaluation } from '../../../shared/validators/credsEvaluation.validator';
 import { AuthService } from '../../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'bld-login',
   standalone: true,
   imports: [PasswordModule, CommonModule, ReactiveFormsModule, FormsModule, FloatLabelModule, ButtonModule, InputTextModule],
-  providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -21,6 +21,7 @@ export class LoginComponent {
 
   #fb = inject(FormBuilder);
   #authService = inject(AuthService);
+  #router = inject(Router);
 
   form = this.#fb.group({
       username: ['', [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-z].*$'), atLeastTwoVowels()]],
@@ -32,9 +33,11 @@ export class LoginComponent {
   );
 
   onSubmit(){
+    console.log('submit', this.form.valid);
     if(this.form.valid){
       const { username, password } = this.form.value;
       this.#authService.login(username!, +password!);
+      this.#router.navigate(['/system']);
     }
   }
 }
