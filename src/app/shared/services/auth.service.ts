@@ -1,10 +1,21 @@
-import { Injectable } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
-  #isAuthenticated = false;
+  #isAuthenticated = signal(false);
+  #router = inject(Router);
+
+  constructor(){
+    if(localStorage.getItem('user')){
+      this.#refreshStateRecover();
+    }
+  }
 
   /**
    *
@@ -13,21 +24,27 @@ export class AuthService {
    * Doesn't return anything, "authenticates" the user.
    */
   login(username: string, password: number){
+    console.log(username, password);
     localStorage.setItem('user', JSON.stringify(username));
-    this.#isAuthenticated = true;
+    this.#isAuthenticated.update(value => !value);
   }
 
   /**
    * Logouts the user & clear the local storage
    */
   logout(){
-    this.#isAuthenticated = false;
+    this.#isAuthenticated.update(value => !value);
     localStorage.clear();
   }
 
   /** @returns A boolean observable whether the user is authenticated*/
   isLoggedIn$(): Observable<boolean> {
-    return of(this.#isAuthenticated);
+    return toObservable(this.#isAuthenticated);
+  }
+
+  #refreshStateRecover(){
+    this.#isAuthenticated.update(value => !value);
+    this.#router.navigate(['/system']);
   }
 
 }
