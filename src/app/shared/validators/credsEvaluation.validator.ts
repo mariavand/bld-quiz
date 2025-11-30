@@ -16,9 +16,6 @@ export function credsEvaluation(): ValidatorFn {
       return { sumLess: 'The password must be less!' }
     }
 
-    console.log(control.value.username, sum);
-
-
     return null;
 
   }
