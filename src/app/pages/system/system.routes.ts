@@ -1,9 +1,9 @@
 import { Routes } from "@angular/router";
-import { SystemComponent } from "./system.component";
+import { QuizComponent } from "./quiz/quiz.component";
 
 export const SYSTEM_ROUTES: Routes = [
   {
     path: '',
-    component: SystemComponent,
+    component: QuizComponent,
   },
 ]
