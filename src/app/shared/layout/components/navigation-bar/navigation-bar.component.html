@@ -1,1 +1,13 @@
-<p>navigation-bar works!</p>
+<p-toolbar>
+  <ng-template #start>
+  </ng-template>
+
+  <ng-template #end>
+    <div class="flex align-items-center gap-2">
+      @if(isAuthenticated()){
+        <span>Welcome, {{ user() }}</span>
+      }
+      <p-avatar icon="pi pi-user" class="text-sm" shape="circle" />
+    </div>
+  </ng-template>
+</p-toolbar>
