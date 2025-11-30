@@ -1,1 +1,9 @@
 @import "primeflex/primeflex.scss";
+@import "primeicons/primeicons.css";
+
+:root{
+  //Overwrite card's, toolbar's background
+  --p-content-background: #283642!important;
+  //Overwrite input's background
+  --p-inputtext-background: #162430!important;
+}
