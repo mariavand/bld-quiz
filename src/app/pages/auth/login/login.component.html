@@ -4,9 +4,9 @@
     <label for="username">Username*</label>
   </p-floatlabel>
   <p-floatlabel>
-    <p-password id="form-password" formControlName="password" autocomplete="off"/>
+    <p-password id="form-password" formControlName="password" autocomplete="off" [feedback]="false"/>
     <label for="form-password">Password*</label>
   </p-floatlabel>
 
-  <p-button label="Login" type="submit"/>
+  <p-button label="Login" type="submit" disabled="form.invalid"/>
 </form>
