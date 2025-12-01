@@ -31,7 +31,7 @@ export function atLeastTwoVowels(): ValidatorFn {
     //If vowels are less than 2 then return error
     if(countVowels < 2){
       return {
-        atLeastTwoVowels: 'Username must contain at least two vowels (a, e, i, o,u)'
+        atLeastTwoVowels: true
       }
     }
 

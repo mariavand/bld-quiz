@@ -13,7 +13,7 @@ export function credsEvaluation(): ValidatorFn {
     const sum = [...control.value.username].reduce((counter, char, index) => counter = counter + listOfNumbers[index], 0);
 
     if(sum <= control.value.password){
-      return { sumLess: 'The password must be less!' }
+      return { sumLess: true }
     }
 
     return null;

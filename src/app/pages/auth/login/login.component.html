@@ -1,12 +1,31 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-4 mt-4 align-items-center">
-  <p-floatlabel>
-    <input type="text" id="username" pInputText formControlName="username" autocomplete="off"/>
-    <label for="username">Username*</label>
-  </p-floatlabel>
-  <p-floatlabel>
-    <p-password id="form-password" formControlName="password" autocomplete="off" [feedback]="false"/>
-    <label for="form-password">Password*</label>
-  </p-floatlabel>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-4 mt-4 align-items-start">
+  <div>
+    <p-floatlabel class="mb-2">
+      <input type="text" id="username" pInputText formControlName="username" autocomplete="off"/>
+      <label for="username">Username*</label>
+    </p-floatlabel>
+    @if(f('username').touched && f('username').invalid){
+      @for(error of f('username').errors | keyvalue; track error){
+        <p-message severity="error" size="small" variant="simple">{{ errorMsg[error.key] }}</p-message>
+      }
+    }
+  </div>
+  <div>
+    <p-floatlabel class="mb-2">
+      <p-password id="form-password" formControlName="password" autocomplete="off" [feedback]="false"/>
+      <label for="form-password">Password*</label>
+    </p-floatlabel>
+    @if(f('password').touched && f('password').invalid){
+      @for(error of f('password').errors | keyvalue; track error){
+        <p-message severity="error" size="small" variant="simple">{{ errorMsg[error.key] }}</p-message>
+      }
+    }
+    @if(f('password').touched && f('password').invalid && f('password').value){
+      @for(error of form.errors | keyvalue; track error){
+        <p-message severity="error" size="small" variant="simple">{{ errorMsg[error.key] }}</p-message>
+      }
+    }
+  </div>
 
-  <p-button label="Login" type="submit" [disabled]="form.invalid"/>
+  <p-button class="align-self-center" label="Login" type="submit" [disabled]="form.invalid"/>
 </form>
