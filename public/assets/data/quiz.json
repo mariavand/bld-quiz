@@ -6,7 +6,7 @@
 		{
 			"q_id": 1,
 			"title": "The original version of Monopoly was based on the streets of which American city?",
-			"img": "#####",
+			"img": "monopoly.jpg",
 			"question_type": "multiplechoice-single",
 			"possible_answers": [
 				{
@@ -32,7 +32,7 @@
 		{
 			"q_id": 2,
 			"title": "In Backgammon, rolling double is generally considered a bad thing",
-			"img": "#####",
+			"img": "backgammon.jpg",
 			"question_type": "truefalse",
 			"correct_answer": false,
 			"points": 2
@@ -40,7 +40,7 @@
 		{
 			"q_id": 3,
 			"title": "In Dungeons and Dragons, which character races can see twice the distance as a human when in minimal light?",
-			"img": "#####",
+			"img": "Dungeons and Dragons.jpg",
 			"question_type": "multiplechoice-multiple",
 			"possible_answers": [
 				{
@@ -66,7 +66,7 @@
 		{
 			"q_id": 4,
 			"title": "How many continents are there in Risk?",
-			"img": "#####",
+			"img": "risk.jpg",
 			"question_type": "multiplechoice-single",
 			"possible_answers": [
 				{
@@ -92,7 +92,7 @@
 		{
 			"q_id": 5,
 			"title": "In Chess, what is the only piece that can jump over other pieces?",
-			"img": "#####",
+			"img": "chess.jpg",
 			"question_type": "multiplechoice-single",
 			"possible_answers": [
 				{
@@ -118,7 +118,7 @@
 		{
 			"q_id": 6,
 			"title": "Which of the following are NOT subject categories in the original edition of Trivial Pursuit?",
-			"img": "#####",
+			"img": "Trivial Pursuit.png",
 			"question_type": "multiplechoice-multiple",
 			"possible_answers": [
 				{
@@ -144,7 +144,7 @@
 		{
 			"q_id": 7,
 			"title": "How many squares are there on a Scrabble board?",
-			"img": "#####",
+			"img": "scrabble.jpg",
 			"question_type": "multiplechoice-single",
 			"possible_answers": [
 				{
@@ -170,7 +170,7 @@
         {
             "q_id": 8,
             "title": "The name 'Jenga' is derived from a word meaning 'Build' in which language?",
-            "img": "#####",
+            "img": "jenga.jpg",
             "question_type": "multiplechoice-single",
             "possible_answers": [
                 {

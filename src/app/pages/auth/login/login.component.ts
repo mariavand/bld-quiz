@@ -52,7 +52,6 @@ export class LoginComponent {
   }
 
   onSubmit(){
-    console.log(this.form);
     if(this.form.valid){
       const { username, password } = this.form.value;
       this.#authService.login(username!, +password!);
