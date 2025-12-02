@@ -9,10 +9,11 @@
         }
       </p-step-list>
       <p-step-panels>
-        <form [formGroup]="form" (click)="print()">
+        <form [formGroup]="form">
           @for(question of quizData()?.questions; track question.q_id){
             <p-step-panel [value]="question.q_id">
-                <ng-template #content let-activateCallback="activateCallback">
+              <ng-template #content let-activateCallback="activateCallback">
+                  <p-toast position="top-right" key="tr" [life]="3000"/>
                     <div>
                         <h4 class="flex sm:text-xs md:text-sm lg:text-base xl:text-lg justify-content-center align-items-center">
                             {{ question.title }}
@@ -35,8 +36,9 @@
                         }
                       </div>
                     </div>
-                    <div class="flex pt-6 justify-content-end">
-                        <p-button type="click" label="Next" icon="pi pi-arrow-right" iconPos="right" [disabled]="form.get(question.q_id.toString())?.invalid" (click)="activateCallback(question.q_id + 1)" />
+                    <div class="flex gap-8 pt-6 justify-content-center">
+                        <p-button type="click" label="Submit" [disabled]="f(question.q_id.toString()).invalid" (click)="showMessage(question.q_id)" />
+                        <p-button type="click" label="Next" icon="pi pi-arrow-right" iconPos="right" [disabled]="!hasSubmitted" (click)="activateCallback(question.q_id + 1); resetSubmissionFlag()" />
                     </div>
                 </ng-template>
             </p-step-panel>
