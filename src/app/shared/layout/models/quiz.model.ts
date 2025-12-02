@@ -9,7 +9,7 @@ export type Question = {
   readonly q_id: number;
   readonly title: string;
   readonly img: string;
-  readonly question_type: 'multiplechoice-single' | 'multiplechoice-single' | 'truefalse';
+  readonly question_type: 'multiplechoice-multiple' | 'multiplechoice-single' | 'truefalse';
   readonly possible_answers?: PossibleAnswers[];
   readonly correct_answer: number | number[] | boolean;
   readonly points: number;
