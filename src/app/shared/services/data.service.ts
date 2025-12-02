@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, EMPTY, first, map, Observable, tap } from 'rxjs';
+import { catchError, delay, EMPTY, first, map, Observable, tap } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { Quiz } from '../layout/models/quiz.model';
 import { Score } from '../layout/models/results.model';
@@ -14,12 +14,14 @@ export class DataService {
   #resultData = toSignal(this.#loadResultData());
 
   /**
+   * Note: The delay is added only for demo purposes
    * Loads the mock quiz data.
    * @returns Observable of the JSON data.
    */
   #loadQuizData(): Observable<Quiz> {
     return this.#http.get(environment.getQuizData).pipe(
       first(),
+      delay(1000),
       map((result) => result as Quiz),
       catchError((err) => {
         console.error(err);
