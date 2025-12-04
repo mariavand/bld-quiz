@@ -17,7 +17,7 @@ import { UserAnswer } from '../../../shared/layout/models/answer.model';
   selector: 'bld-quiz',
   standalone: true,
   imports: [StepperModule, ButtonModule, ListboxModule, RadioButtonModule, ReactiveFormsModule, ToastModule, ProgressSpinnerModule, CommonModule],
-  providers: [DataService, StateService, MessageService],
+  providers: [StateService, MessageService],
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.scss'
 })
@@ -98,15 +98,12 @@ export class QuizComponent {
   }
 
   #addPoints(points: number){
-    console.log(points);
     this.points.update((value) => value + points);
-    console.log(this.points());
   }
 
   statusQuiz(q_id: number){
     if(q_id == this.quizData()?.questions.length){
-      console.log(this.form.value);
-      this.#dataService.setUserAnswers(this.form.value as UserAnswer[]);
+      this.#dataService.setUserAnswers(Object.values(this.form.value) as UserAnswer[]);
       this.#router.navigate(['/system/results', this.points()]);
     }
   }

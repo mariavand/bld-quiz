@@ -1,13 +1,16 @@
-@if(calculatedScore()){
+@if(userResult()){
   <p-splitter class="mb-8" layout="vertical">
+
     <ng-template pTemplate="pane">
-      <div class="flex-grow flex justify-content-center align-items-center h-full">
+      <div class="flex justify-content-center align-items-center h-full">
         <h2>{{ calculatedScore() }}%</h2>
       </div>
     </ng-template>
-    <ng-template pTemplate="pane" class="flex ">
-      <section class="m-3 h-full flex flex-column flex-grow justify-content-center align-items-center">
-        <p-card [header]="userResult()?.title" class="text-center">
+
+    <ng-template pTemplate="pane">
+      <section class="m-3 h-full flex flex-column flex-grow align-items-center w-full">
+
+        <p-card [header]="userResult()?.title" class="text-center w-full">
           <div class="flex my-3 justify-content-center align-items-center">
             <img [src]="'assets/images/' + userResult()?.img" class="h-full w-10rem" [alt]="userResult()?.img">
           </div>
@@ -15,18 +18,21 @@
             {{ userResult()?.message }}
           </div>
         </p-card>
-        <p-divider class="my-3" />
-        <p-fieldset legend="Answers" class="h-full">
-          @if(userAnswers()){
-            <div class="mb-8 ">
-              @let quiz = quizData()?.questions;
-              @for(answer of userAnswers(); track answer){
-                <div class="flex-grow flex justify-content-center align-items-center h-full">
+
+        <p-divider class="my-3 w-full" />
+
+        <p-fieldset legend="Answers" class="w-full">
+          <div class="mb-2 p-2">
+            @let quiz = quizData()?.questions;
+            @for(answer of userAnswers(); track $index;){
+              <div>
+                <div class="flex justify-content-center align-items-center mb-4">
                   <h3>{{ quiz![$index].title }}</h3>
                 </div>
-                <p-splitter class="h-20rem">
-                  <p-splitter-panel>
-                    <div class="flex-grow flex justify-content-center align-items-center h-full">
+
+                <p-splitter>
+                  <ng-template pTemplate="pane">
+                    <div class="flex flex-column justify-content-center align-items-center h-full">
                       <h4>Your Answer</h4>
                       @switch(quiz![$index].question_type){
                         @case ('multiplechoice-single') {
@@ -42,16 +48,16 @@
                         }
                       }
                     </div>
-                  </p-splitter-panel>
-                  <p-splitter-panel>
-                    <div class="flex-grow flex justify-content-center align-items-center h-full">
+                  </ng-template>
+                  <ng-template pTemplate="pane">
+                    <div class="flex flex-column justify-content-center align-items-center h-full">
                       <h4>Correct Answer</h4>
 
                       @let q = quiz![$index];
 
                       @switch(q.question_type){
                         @case ('multiplechoice-single') {
-                          <span>{{ correctAnswer()[$index].caption }}</span>
+                          <span>{{ correctAnswer()[$index]?.caption }}</span>
                         }
                         @case ('multiplechoice-multiple') {
                           @for(ans of correctAnswer()[$index]; track ans){
@@ -63,11 +69,12 @@
                         }
                       }
                     </div>
-                  </p-splitter-panel>
+                  </ng-template>
                 </p-splitter>
-              }
-            </div>
-          }
+              </div>
+              <p-divider class="my-4 w-full" />
+            }
+          </div>
         </p-fieldset>
       </section>
     </ng-template>

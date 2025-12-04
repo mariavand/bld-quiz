@@ -8,13 +8,13 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { FieldsetModule } from 'primeng/fieldset';
 import { UserAnswer } from '../../../../shared/layout/models/answer.model';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'bld-results',
   standalone: true,
-  imports: [SplitterModule, CardModule, DividerModule, FieldsetModule],
-  providers: [DataService],
+  imports: [SplitterModule, CardModule, DividerModule, FieldsetModule, CommonModule],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss'
 })
@@ -24,7 +24,7 @@ export class ResultsComponent {
 
   quizData = computed(() => this.#dataService.getQuizData());
   resultsData = computed(() => this.#dataService.getResultsData()?.results);
-  userAnswers = computed(() => this.#dataService.getUserAnswers());
+  userAnswers = this.#dataService.getUserAnswers();
 
   #points = toSignal(this.#route.paramMap.pipe(
     first(),
@@ -43,6 +43,7 @@ export class ResultsComponent {
   });
 
   userResult = computed(() => this.resultsData()?.filter((result) => result.minpoints <= this.calculatedScore() && result.maxpoints >= this.calculatedScore())[0]);
+
   correctAnswer: Signal<UserAnswer[]> = computed(() => {
     return (this.quizData()?.questions.map((q) => {
       switch(q?.question_type){
@@ -59,6 +60,7 @@ export class ResultsComponent {
   constructor(){
     effect(() => {
       console.log('ca', this.correctAnswer());
+      console.log('ua', this.userAnswers());
     })
   }
 }

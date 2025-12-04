@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { catchError, delay, EMPTY, first, map, Observable, tap } from 'rxjs';
 import { environment } from '../../environment/environment';
 import { Quiz } from '../layout/models/quiz.model';
@@ -7,13 +7,21 @@ import { Score } from '../layout/models/results.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserAnswer } from '../layout/models/answer.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DataService {
 
   #http = inject(HttpClient);
   #quizData = toSignal(this.#loadQuizData());
   #resultData = toSignal(this.#loadResultData());
-  #userAnswers: WritableSignal<UserAnswer[]> = signal([]);
+  #userAnswers: WritableSignal<UserAnswer[] | undefined> = signal(undefined);
+
+  constructor(){
+    effect(() => {
+      console.log('getUserAnswers', this.#userAnswers());
+    })
+  }
 
   /**
    * Note: The delay is added only for demo purposes
@@ -56,10 +64,12 @@ export class DataService {
   }
 
   getUserAnswers(){
-    return this.#userAnswers();
+    console.log('this.#userAnswers()', this.#userAnswers());
+    return this.#userAnswers.asReadonly();
   }
 
   setUserAnswers(answers: UserAnswer[]){
+    console.log('answers', answers);
     this.#userAnswers.set(answers);
   }
 
