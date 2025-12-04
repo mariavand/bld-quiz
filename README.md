@@ -45,7 +45,7 @@ The application is built using the latest Angular best practices:
 
 **Exceptions**: The only data currently persisted is the user object, which should be converted to a JWT token for production. Temporary form states may also be saved for user experience purposes.
 
-💡 ### Improvements & Future Work
+## 💡 4. Improvements & Future Work
 While the core functionality is complete, the following improvements are needed:
 
 ### Testing & Quality Assurance
