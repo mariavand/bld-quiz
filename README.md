@@ -24,8 +24,9 @@ cd bld-quiz
 
 Once inside the project directory, use npm to install all necessary packages and then serve the application using the Angular CLI command.
 
-Install Node Modules: npm install
-Serve the Application: npm serve
+Install Node Modules: ```npm install```
+
+Serve the Application: ```npm serve```
 
 The application will typically be available in your browser at http://localhost:4200/.
 
