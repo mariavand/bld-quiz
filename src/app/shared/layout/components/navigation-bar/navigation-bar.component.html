@@ -8,6 +8,9 @@
         <span>Welcome, {{ user() }}</span>
       }
       <p-avatar icon="pi pi-user" class="text-sm" shape="circle" />
+      @if(isAuthenticated()){
+        <p-button label="Logout" severity="contrast" size="small" (click)="logout()"/>
+      }
     </div>
   </ng-template>
 </p-toolbar>
