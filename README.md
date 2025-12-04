@@ -20,7 +20,7 @@ To get a copy of the project, open your terminal or command prompt and run the f
 git clone bld-quiz
 cd bld-quiz
 ```
-### 2. Install Dependencies and Run the Application
+## 2. Install Dependencies and Run the Application
 
 Once inside the project directory, use npm to install all necessary packages and then serve the application using the Angular CLI command.
 
@@ -30,7 +30,7 @@ Serve the Application: ```npm serve```
 
 The application will typically be available in your browser at http://localhost:4200/.
 
-💻 ### Technical Implementation Notes
+## 💻 3. Technical Implementation Notes
 
 #### Modern Angular Features
 The application is built using the latest Angular best practices:
