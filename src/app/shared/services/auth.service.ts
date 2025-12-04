@@ -33,7 +33,7 @@ export class AuthService {
    * Logouts the user & clear the local storage
    */
   logout(){
-    this.#isAuthenticated.update(value => !value);
+    this.#isAuthenticated.update(value => false);
     localStorage.clear();
   }
 

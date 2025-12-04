@@ -5,8 +5,8 @@
         <h2>{{ calculatedScore() }}%</h2>
       </div>
     </ng-template>
-    <ng-template pTemplate="pane">
-      <section class="m-3 h-full flex flex-grow justify-content-center align-items-center">
+    <ng-template pTemplate="pane" class="flex ">
+      <section class="m-3 h-full flex flex-column flex-grow justify-content-center align-items-center">
         <p-card [header]="userResult()?.title" class="text-center">
           <div class="flex my-3 justify-content-center align-items-center">
             <img [src]="'assets/images/' + userResult()?.img" class="h-full w-10rem" [alt]="userResult()?.img">
@@ -15,6 +15,60 @@
             {{ userResult()?.message }}
           </div>
         </p-card>
+        <p-divider class="my-3" />
+        <p-fieldset legend="Answers" class="h-full">
+          @if(userAnswers()){
+            <div class="mb-8 ">
+              @let quiz = quizData()?.questions;
+              @for(answer of userAnswers(); track answer){
+                <div class="flex-grow flex justify-content-center align-items-center h-full">
+                  <h3>{{ quiz![$index].title }}</h3>
+                </div>
+                <p-splitter class="h-20rem">
+                  <p-splitter-panel>
+                    <div class="flex-grow flex justify-content-center align-items-center h-full">
+                      <h4>Your Answer</h4>
+                      @switch(quiz![$index].question_type){
+                        @case ('multiplechoice-single') {
+                          <span>{{ answer.caption }}</span>
+                        }
+                        @case ('multiplechoice-multiple') {
+                          @for(ans of answer; track ans){
+                            <span>{{ ans.caption }}</span>
+                          }
+                        }
+                        @default {
+                          <span>{{ answer ? 'Yes' : 'No' }}</span>
+                        }
+                      }
+                    </div>
+                  </p-splitter-panel>
+                  <p-splitter-panel>
+                    <div class="flex-grow flex justify-content-center align-items-center h-full">
+                      <h4>Correct Answer</h4>
+
+                      @let q = quiz![$index];
+
+                      @switch(q.question_type){
+                        @case ('multiplechoice-single') {
+                          <span>{{ correctAnswer()[$index].caption }}</span>
+                        }
+                        @case ('multiplechoice-multiple') {
+                          @for(ans of correctAnswer()[$index]; track ans){
+                            <span>{{ ans.caption }}</span>
+                          }
+                        }
+                        @default {
+                          <span>{{ correctAnswer()[$index] ? 'Yes' : 'No' }}</span>
+                        }
+                      }
+                    </div>
+                  </p-splitter-panel>
+                </p-splitter>
+              }
+            </div>
+          }
+        </p-fieldset>
       </section>
     </ng-template>
   </p-splitter>

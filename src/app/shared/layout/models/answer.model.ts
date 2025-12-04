@@ -1,6 +1,4 @@
-export type UserAnswer = {
-  readonly [key: number]: boolean | Answer | Answer[]
-}
+export type UserAnswer = Answer & Answer[] & boolean;
 
 type Answer = {
   readonly a_id: number;

@@ -21,10 +21,9 @@
                     </div>
                     <div class="flex flex-column align-items-center justify-content-center">
                       <img [src]="'assets/images/' + question.img" class="h-full w-30rem" [alt]="question.img">
-                      <div class="w-30rem mt-4">
+                      <span class="w-30rem mt-4">
                         @if(question.question_type == 'multiplechoice-multiple'){
                           <p-listbox [options]="question.possible_answers!" [formControlName]="question.q_id" optionLabel="caption" [checkmark]="true" [multiple]="true" [metaKeySelection]="false" class="w-full md:w-56"/>
-
                         }
                         @else if(question.question_type == 'multiplechoice-single'){
                           <p-listbox [options]="question.possible_answers!" [formControlName]="question.q_id" optionLabel="caption" [checkmark]="true" [multiple]="false" [metaKeySelection]="false" class="w-full md:w-56" />
@@ -35,7 +34,12 @@
                           <p-radiobutton [inputId]="'No'" [formControlName]="question.q_id.toString()" [name]="question.q_id.toString()" [value]="false" variant="filled"/>
                           <label for="No" class="mx-2">No</label>
                         }
-                      </div>
+                      </span>
+                      @if(f(question.q_id.toString()).invalid && f(question.q_id.toString()).dirty){
+                        <span class="text-color-red mt-3">
+                          Please select the correct answer!
+                        </span>
+                      }
                     </div>
                     <div class="flex gap-8 pt-6 justify-content-center">
                       @if(!hasSubmitted()){
