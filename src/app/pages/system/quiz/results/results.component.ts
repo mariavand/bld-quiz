@@ -57,10 +57,4 @@ export class ResultsComponent {
     })) as UserAnswer[];
   })
 
-  constructor(){
-    effect(() => {
-      console.log('ca', this.correctAnswer());
-      console.log('ua', this.userAnswers());
-    })
-  }
 }

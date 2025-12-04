@@ -1,6 +1,7 @@
 export type UserAnswer = Answer & Answer[] & boolean;
 
-type Answer = {
+export type Answer = {
   readonly a_id: number;
   readonly caption: string;
+  readonly correctnessStatus?: boolean;
 }

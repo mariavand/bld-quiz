@@ -26,8 +26,14 @@
             @let quiz = quizData()?.questions;
             @for(answer of userAnswers(); track $index;){
               <div>
-                <div class="flex justify-content-center align-items-center mb-4">
+                <div class="flex gap-2 justify-content-center align-items-center mb-4">
                   <h3>{{ quiz![$index].title }}</h3>
+                  @if(answer?.correctnessStatus || answer[0]?.correctnessStatus){
+                    <i class="pi pi-check-circle text-base"></i>
+                  }
+                  @else {
+                    <i class="pi pi-times-circle text-base"></i>
+                  }
                 </div>
 
                 <p-splitter>
@@ -44,7 +50,7 @@
                           }
                         }
                         @default {
-                          <span>{{ answer ? 'Yes' : 'No' }}</span>
+                          <span>{{ answer.correctnessStatus ? 'Yes' : 'No' }}</span>
                         }
                       }
                     </div>
@@ -57,7 +63,7 @@
 
                       @switch(q.question_type){
                         @case ('multiplechoice-single') {
-                          <span>{{ correctAnswer()[$index]?.caption }}</span>
+                          <span>{{ correctAnswer()[$index].caption }}</span>
                         }
                         @case ('multiplechoice-multiple') {
                           @for(ans of correctAnswer()[$index]; track ans){

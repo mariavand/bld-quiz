@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserAnswer } from '../../../shared/layout/models/answer.model';
+import { Answer, UserAnswer } from '../../../shared/layout/models/answer.model';
 
 @Component({
   selector: 'bld-quiz',
@@ -103,21 +103,24 @@ export class QuizComponent {
 
   statusQuiz(q_id: number){
     if(q_id == this.quizData()?.questions.length){
-      this.#dataService.setUserAnswers(Object.values(this.form.value) as UserAnswer[]);
+
+      let userAnswers = (Object.values(this.form.value) as Partial<UserAnswer>[]).map((ua, index) => {
+        switch(this.quizData()?.questions[index].question_type){
+          case "multiplechoice-multiple":
+            let correctnessStatus = (this.quizData()?.questions[index].correct_answer as number[]).every((ans, i) => ans == ua[i]?.a_id);
+            ua[0] = { ...ua[0] as Answer, correctnessStatus };
+            break;
+          default:
+            ua = { ...ua, correctnessStatus: ua?.a_id == this.quizData()?.questions[index].correct_answer };
+        }
+        return ua;
+      });
+
+      console.log(userAnswers);
+
+      this.#dataService.setUserAnswers(userAnswers as UserAnswer[]);
       this.#router.navigate(['/system/results', this.points()]);
     }
-  }
-
-  showCorrectAnswers(correctAnswer: number | number[] | boolean){
-    // console.log(correctAnswer);
-    // const list = document.querySelectorAll('li[role=option].p-listbox-option').forEach((item: Element) => {
-    //   console.log(item.innerHTML);
-    //   // if(item.innerText){
-
-    //   // }
-    // });
-    // //innerText
-    // console.log('list', list);
   }
 
   resetSubmissionFlag(){
