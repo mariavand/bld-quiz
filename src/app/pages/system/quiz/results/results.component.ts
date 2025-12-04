@@ -22,17 +22,23 @@ export class ResultsComponent {
   #dataService = inject(DataService);
   #route = inject(ActivatedRoute);
 
+  //Retrieve quiz data
   quizData = computed(() => this.#dataService.getQuizData());
+  //Retrieve the results data
   resultsData = computed(() => this.#dataService.getResultsData()?.results);
+  //Retrieve the user answers
   userAnswers = this.#dataService.getUserAnswers();
 
+  //Get the points from the route
   #points = toSignal(this.#route.paramMap.pipe(
     first(),
     map((params) => Number(params.get('points')))
   ));
 
+  //Calculate the the maximum amount of the points that the user could get
   #maximumPoints = computed(() => this.#dataService.getQuizData()?.questions.reduce((count, value) => count + value.points, 0));
 
+  //Based on the maximum points calculate the percentage score
   calculatedScore = computed(() => {
     if(this.#points() && this.#maximumPoints() != 0){
       return this.#points()! * 100 / this.#maximumPoints()!;
@@ -42,8 +48,10 @@ export class ResultsComponent {
     }
   });
 
+  //Based on the calculated score, the corresponding result is returned
   userResult = computed(() => this.resultsData()?.filter((result) => result.minpoints <= this.calculatedScore() && result.maxpoints >= this.calculatedScore())[0]);
 
+  //Calculate the captions of the  correct answers
   correctAnswer: Signal<UserAnswer[]> = computed(() => {
     return (this.quizData()?.questions.map((q) => {
       switch(q?.question_type){

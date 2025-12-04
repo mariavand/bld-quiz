@@ -1,6 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { DataService } from '../../../shared/services/data.service';
-import { StateService } from '../../../shared/services/state.service';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { ListboxModule } from 'primeng/listbox';
@@ -17,19 +16,17 @@ import { Answer, UserAnswer } from '../../../shared/layout/models/answer.model';
   selector: 'bld-quiz',
   standalone: true,
   imports: [StepperModule, ButtonModule, ListboxModule, RadioButtonModule, ReactiveFormsModule, ToastModule, ProgressSpinnerModule, CommonModule],
-  providers: [StateService, MessageService],
+  providers: [MessageService],
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.scss'
 })
 export class QuizComponent {
   #dataService = inject(DataService);
-  #stateService = inject(StateService);
   #fb = inject(FormBuilder);
   #messageService = inject(MessageService);
   #router = inject(Router);
 
   quizData = computed(() => this.#dataService.getQuizData());
-  selectedQuestion = computed(() => this.#stateService.getSelectedQuestion());
   hasSubmitted = signal(false);
   points = signal(0);
 
@@ -56,6 +53,11 @@ export class QuizComponent {
     return this.form.get(k) as FormControl;
   }
 
+  /**
+   *
+   * @param q_id question id
+   * Based on the question shows the corresponding message
+   */
   showMessage(q_id: number){
     const question = this.quizData()?.questions.filter((q) => q.q_id == q_id)[0];
 
@@ -101,6 +103,7 @@ export class QuizComponent {
     this.points.update((value) => value + points);
   }
 
+  /**On last question saves the user's answers in memory and goes to results */
   statusQuiz(q_id: number){
     if(q_id == this.quizData()?.questions.length){
 
@@ -116,8 +119,6 @@ export class QuizComponent {
         return ua;
       });
 
-      console.log(userAnswers);
-
       this.#dataService.setUserAnswers(userAnswers as UserAnswer[]);
       this.#router.navigate(['/system/results', this.points()]);
     }
@@ -127,6 +128,9 @@ export class QuizComponent {
     this.hasSubmitted.set(false);
   }
 
+  /**
+   * Private method that shows the green toast
+   */
   #showSuccessToast() {
     this.#messageService.add({
       severity: 'success',
@@ -136,6 +140,9 @@ export class QuizComponent {
     });
   }
 
+  /**
+   * Private method that shows error toast (could be improved and "merged" with the above one)
+   */
   #showErrorToast() {
     this.#messageService.add({
       severity: 'error',

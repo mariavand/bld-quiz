@@ -24,6 +24,7 @@ export class LoginComponent {
   #authService = inject(AuthService);
   #router = inject(Router);
 
+  // Object that maps the errors with their message
   errorMsg: { [key: string]: string } = {
     required: 'This field is required!',
     atLeastTwoVowels: 'Username must contain at least two vowels (a, e, i, o,u)!',
@@ -43,14 +44,18 @@ export class LoginComponent {
     }
   );
 
+  /**
+   *
+   * @param k the key of the formm control
+   * @returns form control of the form
+   */
   f(k: string): FormControl {
     return this.form.get(k) as FormControl;
   }
 
-  getErrorsKeys(formErrors: any){
-    return Object.keys(formErrors);
-  }
-
+  /**
+   * Submits the user's input in order to login
+   */
   onSubmit(){
     if(this.form.valid){
       const { username, password } = this.form.value;

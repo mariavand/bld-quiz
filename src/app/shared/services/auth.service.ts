@@ -24,7 +24,6 @@ export class AuthService {
    * Doesn't return anything, "authenticates" the user.
    */
   login(username: string, password: number){
-    console.log(username, password);
     localStorage.setItem('user', JSON.stringify(username));
     this.#isAuthenticated.update(value => !value);
   }

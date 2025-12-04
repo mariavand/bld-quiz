@@ -17,12 +17,6 @@ export class DataService {
   #resultData = toSignal(this.#loadResultData());
   #userAnswers: WritableSignal<UserAnswer[] | undefined> = signal(undefined);
 
-  constructor(){
-    effect(() => {
-      console.log('getUserAnswers', this.#userAnswers());
-    })
-  }
-
   /**
    * Note: The delay is added only for demo purposes
    * Loads the mock quiz data.
@@ -64,12 +58,10 @@ export class DataService {
   }
 
   getUserAnswers(){
-    console.log('this.#userAnswers()', this.#userAnswers());
     return this.#userAnswers.asReadonly();
   }
 
   setUserAnswers(answers: UserAnswer[]){
-    console.log('answers', answers);
     this.#userAnswers.set(answers);
   }
 
