@@ -48,25 +48,25 @@ The application is built using the latest Angular best practices:
 💡 ### Improvements & Future Work
 While the core functionality is complete, the following improvements are needed:
 
-#### Testing & Quality Assurance
+### Testing & Quality Assurance
 **Unit Testing**: I would prioritize writing unit tests to thoroughly validate all application logic and services. (Currently working on this skill).
 
 **Integration Testing**: In a production setting without a dedicated QA tester, I would implement robust integration tests using tools like Cypress or Playwright to ensure full end-to-end functionality. (Currently working on this skill).
 
-#### Architecture & Maintainability
+### Architecture & Maintainability
 
 **Component Granularity**: The application could be further broken down into smaller, more focused components to enhance maintainability and code readability.
 
 **State Management**: For a larger, more complex application, I would integrate a dedicated solution like NGRX Signal Store to manage application state more effectively.
 
-#### UI/UX & Media
+### UI/UX & Media
 **Image Copyrights & Licensing**: I would recommend discussing with the UI/UX team to verify the licensing and copyrights for all pictures currently used, or to purchase licensed images to avoid legal issues.
 
 **Image Responsiveness**: Implement logic (e.g., using srcset or a dedicated image service) to serve smaller image files to mobile users and larger ones to desktop users, optimizing load times and bandwidth usage.
 
 **Theming**: Further investigation into changing the application's theming could be done based on project requirements or personal preference.
 
-#### Feature Enhancements
+### Feature Enhancements
 **State Persistence (Optional)**: If required by business needs (e.g., surviving page refreshes), functionality could be added to temporarily save user answers submitted in the Local Storage.
 
 **Correct Answer Highlighting**: I would resolve the implementation issue regarding how to clearly and correctly highlight the right answer in the quiz results view.
