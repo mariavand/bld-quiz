@@ -17,8 +17,8 @@ Follow these steps to clone the repository and run the application locally.
 To get a copy of the project, open your terminal or command prompt and run the following command. This will create a local folder named `[Your-Repository-Name]` containing the project files.
 
 ```bash
-git clone [Your Repository URL Here]
-cd [Your-Repository-Name]
+git clone bld-quiz
+cd bld-quiz
 ```
 ### 2. Install Dependencies and Run the Application
 
