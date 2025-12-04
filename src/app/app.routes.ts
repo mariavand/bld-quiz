@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthComponent } from './pages/auth/auth.component';
 import { authGuard } from './shared/guards/auth.guard';
+import { SystemComponent } from './pages/system/system.component';
 
 export const routes: Routes = [
   {
@@ -11,7 +12,6 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./pages/auth/auth.routes').then(m => m.AUTH_ROUTES),
-    component: AuthComponent,
     title: 'Home Page'
   },
   {

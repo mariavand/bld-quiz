@@ -1,0 +1,26 @@
+@if(calculatedScore()){
+  <p-splitter class="mb-8" layout="vertical">
+    <ng-template pTemplate="pane">
+      <div class="flex-grow flex justify-content-center align-items-center h-full">
+        <h2>{{ calculatedScore() }}%</h2>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="pane">
+      <section class="m-3 h-full flex flex-grow justify-content-center align-items-center">
+        <p-card [header]="userResult()?.title" class="text-center">
+          <div class="flex my-3 justify-content-center align-items-center">
+            <img [src]="'assets/images/' + userResult()?.img" class="h-full w-10rem" [alt]="userResult()?.img">
+          </div>
+          <div>
+            {{ userResult()?.message }}
+          </div>
+        </p-card>
+      </section>
+    </ng-template>
+  </p-splitter>
+}
+@else {
+  <div class="h-30rem w-30rem flex justify-content-center align-items-center">
+    <span class="loader"></span>
+  </div>
+}

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { DataService } from '../../../shared/services/data.service';
 import { StateService } from '../../../shared/services/state.service';
 import { StepperModule } from 'primeng/stepper';
@@ -9,11 +9,14 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { UserAnswer } from '../../../shared/layout/models/answer.model';
 
 @Component({
   selector: 'bld-quiz',
   standalone: true,
-  imports: [StepperModule, ButtonModule, ListboxModule, RadioButtonModule, ReactiveFormsModule, ToastModule, ProgressSpinnerModule],
+  imports: [StepperModule, ButtonModule, ListboxModule, RadioButtonModule, ReactiveFormsModule, ToastModule, ProgressSpinnerModule, CommonModule],
   providers: [DataService, StateService, MessageService],
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.scss'
@@ -23,10 +26,12 @@ export class QuizComponent {
   #stateService = inject(StateService);
   #fb = inject(FormBuilder);
   #messageService = inject(MessageService);
+  #router = inject(Router);
 
   quizData = computed(() => this.#dataService.getQuizData());
   selectedQuestion = computed(() => this.#stateService.getSelectedQuestion());
-  hasSubmitted = false;
+  hasSubmitted = signal(false);
+  points = signal(0);
 
   form = this.#fb.group({});
 
@@ -59,24 +64,67 @@ export class QuizComponent {
 
     switch(question?.question_type){
       case "multiplechoice-single":
-        correctAnswer == userAnswer.a_id ? this.#showSuccessToast() : this.#showErrorToast();
+        if(correctAnswer == userAnswer.a_id){
+          this.#addPoints(question.points);
+          this.#showSuccessToast();
+        }
+        else{
+          this.#showErrorToast();
+        }
         break;
       case "multiplechoice-multiple":
         if(Array.isArray(correctAnswer)){
           userAnswer = userAnswer.map((item: {[key: string]: number | string}) => item['a_id'])
           const res = userAnswer.every((answer: number, index: number) => answer == correctAnswer[index]);
-          res == true ? this.#showSuccessToast() : this.#showErrorToast();
+          if(res == true){
+            this.#showSuccessToast();
+            this.#addPoints(question.points);
+          }
+          else{
+            this.#showErrorToast();
+          }
         }
         break;
       default:
-        correctAnswer == userAnswer ? this.#showSuccessToast() : this.#showErrorToast();
-
+        if(correctAnswer == userAnswer){
+          this.#addPoints(question!.points);
+          this.#showSuccessToast();
+        }
+        else{
+          this.#showErrorToast();
+        }
     }
-    this.hasSubmitted = true;
+    this.hasSubmitted.set(true);
+  }
+
+  #addPoints(points: number){
+    console.log(points);
+    this.points.update((value) => value + points);
+    console.log(this.points());
+  }
+
+  statusQuiz(q_id: number){
+    if(q_id == this.quizData()?.questions.length){
+      console.log(this.form.value);
+      this.#dataService.setUserAnswers(this.form.value as UserAnswer[]);
+      this.#router.navigate(['/system/results', this.points()]);
+    }
+  }
+
+  showCorrectAnswers(correctAnswer: number | number[] | boolean){
+    // console.log(correctAnswer);
+    // const list = document.querySelectorAll('li[role=option].p-listbox-option').forEach((item: Element) => {
+    //   console.log(item.innerHTML);
+    //   // if(item.innerText){
+
+    //   // }
+    // });
+    // //innerText
+    // console.log('list', list);
   }
 
   resetSubmissionFlag(){
-    this.hasSubmitted = false;
+    this.hasSubmitted.set(false);
   }
 
   #showSuccessToast() {

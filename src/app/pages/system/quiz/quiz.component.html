@@ -1,7 +1,7 @@
 @if(quizData()){
   <h1 class="text-center sm:text-sm md:text-base lg:text-lg xl:text-xl">{{ quizData()?.description }}</h1>
 
-  <div class="xl:m-8 lg:m-8 md:m-4 sm:m-3">
+  <div class="xl:m-4 lg:m-4 md:m-2 sm:m-1">
     <p-stepper [value]="1" class="basis-[50rem]" [linear]="true">
       <p-step-list>
         @for(question of quizData()?.questions; track question.q_id){
@@ -23,7 +23,8 @@
                       <img [src]="'assets/images/' + question.img" class="h-full w-30rem" [alt]="question.img">
                       <div class="w-30rem mt-4">
                         @if(question.question_type == 'multiplechoice-multiple'){
-                          <p-listbox [options]="question.possible_answers!" [formControlName]="question.q_id" optionLabel="caption" [checkmark]="true" [multiple]="true" [metaKeySelection]="false" class="w-full md:w-56" />
+                          <p-listbox [options]="question.possible_answers!" [formControlName]="question.q_id" optionLabel="caption" [checkmark]="true" [multiple]="true" [metaKeySelection]="false" class="w-full md:w-56"/>
+
                         }
                         @else if(question.question_type == 'multiplechoice-single'){
                           <p-listbox [options]="question.possible_answers!" [formControlName]="question.q_id" optionLabel="caption" [checkmark]="true" [multiple]="false" [metaKeySelection]="false" class="w-full md:w-56" />
@@ -37,8 +38,12 @@
                       </div>
                     </div>
                     <div class="flex gap-8 pt-6 justify-content-center">
-                        <p-button type="click" label="Submit" [disabled]="f(question.q_id.toString()).invalid" (click)="showMessage(question.q_id)" />
-                        <p-button type="click" label="Next" icon="pi pi-arrow-right" iconPos="right" [disabled]="!hasSubmitted" (click)="activateCallback(question.q_id + 1); resetSubmissionFlag()" />
+                      @if(!hasSubmitted()){
+                        <p-button type="button" label="Submit" [disabled]="f(question.q_id.toString()).invalid" (click)="showMessage(question.q_id)" />
+                      }
+                      @else{
+                        <p-button type="button" label="Next" icon="pi pi-arrow-right" iconPos="right" [disabled]="!hasSubmitted()" (click)="activateCallback(question.q_id + 1); resetSubmissionFlag(); statusQuiz(question.q_id);" />
+                      }
                     </div>
                 </ng-template>
             </p-step-panel>
@@ -49,7 +54,7 @@
   </div>
 }
 @else {
-  <div class="h-30rem w-full flex justify-content-center align-items-center">
+  <div class="h-30rem w-30rem flex justify-content-center align-items-center">
     <span class="loader"></span>
   </div>
 }
