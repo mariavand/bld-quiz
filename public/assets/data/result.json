@@ -7,7 +7,7 @@
 			"maxpoints": 33,
 			"title": "Not good.",
 			"message": "We can tell you are not a fan of Board games. Or at least Trivia games.",
-			"img": "#####"
+			"img": "sad.png"
 		},
 		{
 			"r_id": 2,
@@ -15,7 +15,7 @@
 			"maxpoints": 66,
 			"title": "An average attempt",
 			"message": "Your Board games skills need some polishing up. We suggest you get to practicing!",
-			"img": "#####"
+			"img": "meh.png"
 		},
 		{
 			"r_id": 3,
@@ -23,7 +23,7 @@
 			"maxpoints": 100,
 			"title": "Impressive results!",
 			"message": "You are probably first on your friends' Game Nights guest list, and rightly so!",
-			"img": "#####"
+			"img": "happy.png"
 		}
 	]
 }
