@@ -14,7 +14,7 @@ Follow these steps to clone the repository and run the application locally.
 
 ### 1. Clone the Repository from GitHub
 
-To get a copy of the project, open your terminal or command prompt and run the following command. This will create a local folder named `[Your-Repository-Name]` containing the project files.
+To get a copy of the project, open your terminal or command prompt and run the following command. This will create a local folder named `BldQuiz` containing the project files.
 
 ```bash
 git clone bld-quiz
